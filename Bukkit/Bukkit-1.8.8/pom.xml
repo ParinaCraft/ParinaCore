@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>fi.joniaromaa</groupId>
+    <artifactId>bukkit</artifactId>
+    <version>1.0-DEV</version>
+  </parent>
+  
+  <artifactId>bukkit-1.8.8</artifactId>
+  
+     <repositories>
+	  <repository>
+	    <id>dmulloy2-repo</id>
+	    <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
+	  </repository>
+     </repositories>
+     
+  	<dependencies>
+	    <dependency>
+	        <groupId>org.github.paperspigot</groupId>
+	        <artifactId>paperspigot</artifactId>
+	        <version>1.8.8-R0.1-SNAPSHOT</version>
+	        <scope>provided</scope>
+	    </dependency>
+	  <dependency>
+	    <groupId>com.comphenix.protocol</groupId>
+	    <artifactId>ProtocolLib-API</artifactId>
+	    <version>4.3.0</version>
+	        <scope>provided</scope>
+	  </dependency>
+	</dependencies>
+</project>

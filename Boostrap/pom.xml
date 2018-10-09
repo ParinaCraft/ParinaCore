@@ -6,8 +6,8 @@
     <version>1.0-DEV</version>
   </parent>
   
+  <groupId>fi.joniaromaa.parinacorelibrary</groupId>
   <artifactId>boostrap</artifactId>
-    <packaging>jar</packaging>
   
   
    <build>

@@ -1,12 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-  	<groupId>fi.joniaromaa.parinacorelibrary</groupId>
-    <artifactId>bukkit</artifactId>
+  	<groupId>fi.joniaromaa</groupId>
+    <artifactId>parinacorelibrary</artifactId>
     <version>1.0-DEV</version>
   </parent>
   
+  <groupId>fi.joniaromaa.parinacorelibrary</groupId>
   <artifactId>bukkit-1.8.8</artifactId>
+  <packaging>jar</packaging>
   
      <repositories>
 	  <repository>
@@ -16,6 +18,24 @@
      </repositories>
      
   	<dependencies>
+   		<dependency>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
+	        <artifactId>api</artifactId>
+	        <version>${project.version}</version>
+	        <scope>provided</scope>
+	   	</dependency>
+   		<dependency>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
+	        <artifactId>common</artifactId>
+	        <version>${project.version}</version>
+	        <scope>provided</scope>
+	   	</dependency>
+   		<dependency>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
+	        <artifactId>bukkit</artifactId>
+	        <version>${project.version}</version>
+	        <scope>provided</scope>
+	   	</dependency>
 	    <dependency>
 	        <groupId>org.github.paperspigot</groupId>
 	        <artifactId>paperspigot</artifactId>

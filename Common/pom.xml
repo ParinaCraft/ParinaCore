@@ -51,7 +51,7 @@
   
   <dependencies>
    		<dependency>
-	  		<groupId>fi.joniaromaa</groupId>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
 	        <artifactId>api</artifactId>
 	        <version>${project.version}</version>
 	        <type>jar</type>

@@ -22,13 +22,13 @@
   
    <dependencies>
    		<dependency>
-	  		<groupId>fi.joniaromaa</groupId>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
 	        <artifactId>api</artifactId>
 	        <version>${project.version}</version>
 	        <scope>provided</scope>
 	   	</dependency>
    		<dependency>
-	  		<groupId>fi.joniaromaa</groupId>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
 	        <artifactId>common</artifactId>
 	        <version>${project.version}</version>
 	        <scope>provided</scope>

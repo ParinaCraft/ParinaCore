@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>fi.joniaromaa</groupId>
-  <artifactId>parinacorelibrary-parent</artifactId>
+  <artifactId>parinacorelibrary</artifactId>
   <version>1.0-DEV</version>
   <name>ParinaCoreLibrary</name>
   <packaging>pom</packaging>
@@ -38,6 +38,7 @@
    	<module>BungeeCord</module>
    	<module>API</module>
    	<module>Bukkit</module>
+   	<module>Bukkit/Bukkit-1.8.8</module>
    	<module>Common</module>
    	<module>Boostrap</module>
    </modules>

@@ -44,31 +44,31 @@
      
    <dependencies>
       <dependency>
-         <groupId>fi.joniaromaa</groupId>
+         <groupId>fi.joniaromaa.parinacorelibrary</groupId>
          <artifactId>api</artifactId>
          <version>${project.version}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
-         <groupId>fi.joniaromaa</groupId>
+         <groupId>fi.joniaromaa.parinacorelibrary</groupId>
          <artifactId>common</artifactId>
          <version>${project.version}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
-         <groupId>fi.joniaromaa</groupId>
+         <groupId>fi.joniaromaa.parinacorelibrary</groupId>
          <artifactId>bukkit</artifactId>
          <version>${project.version}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
-         <groupId>fi.joniaromaa</groupId>
+         <groupId>fi.joniaromaa.parinacorelibrary</groupId>
          <artifactId>bukkit-1.8.8</artifactId>
          <version>${project.version}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
-         <groupId>fi.joniaromaa</groupId>
+         <groupId>fi.joniaromaa.parinacorelibrary</groupId>
          <artifactId>bungeecord</artifactId>
          <version>${project.version}</version>
          <scope>compile</scope>

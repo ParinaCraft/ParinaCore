@@ -8,7 +8,7 @@
   
   <groupId>fi.joniaromaa.parinacorelibrary</groupId>
   <artifactId>bukkit</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   
   <build>
   	<finalName>Bukkit</finalName>
@@ -27,13 +27,13 @@
   
 	<dependencies>
    		<dependency>
-	  		<groupId>fi.joniaromaa</groupId>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
 	        <artifactId>api</artifactId>
 	        <version>${project.version}</version>
 	        <scope>provided</scope>
 	   	</dependency>
    		<dependency>
-	  		<groupId>fi.joniaromaa</groupId>
+	  		<groupId>fi.joniaromaa.parinacorelibrary</groupId>
 	        <artifactId>common</artifactId>
 	        <version>${project.version}</version>
 	        <scope>provided</scope>
@@ -63,8 +63,4 @@
         <scope>provided</scope>
     </dependency>
 	</dependencies>
-	
-	<modules>
-   		<module>Bukkit-1.8.8</module>
-	</modules>
 </project>

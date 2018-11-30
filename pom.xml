@@ -38,7 +38,7 @@
    	<module>BungeeCord</module>
    	<module>API</module>
    	<module>Bukkit</module>
-   	<module>Bukkit/Bukkit-1.8.8</module>
+   	<module>Bukkit-1.8.8</module>
    	<module>Common</module>
    	<module>Boostrap</module>
    </modules>

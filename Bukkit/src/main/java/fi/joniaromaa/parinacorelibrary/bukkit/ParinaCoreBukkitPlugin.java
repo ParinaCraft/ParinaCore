@@ -1,6 +1,8 @@
 package fi.joniaromaa.parinacorelibrary.bukkit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.permissions.PermissionDefault;
 
 import com.comphenix.protocol.ProtocolLibrary;
 
@@ -76,7 +78,19 @@ public class ParinaCoreBukkitPlugin extends AbstractParinaCorePlugin
 			
 			NmsManager.getNmsHandler().getServerHandler().disableBukkitCommands();
 			
-			this.loader.getServer().getScheduler().runTask(this.loader, () -> NmsManager.getNmsHandler().getServerHandler().disableBukkitCommands());
+			this.loader.getServer().getScheduler().runTask(this.loader, () -> 
+			{
+				NmsManager.getNmsHandler().getServerHandler().disableBukkitCommands();
+
+				Bukkit.getServer().getPluginManager().getPermission("minecraft.command.me").setDefault(PermissionDefault.OP);
+				Bukkit.getServer().getPluginManager().getPermission("minecraft.command.tell").setDefault(PermissionDefault.OP);
+				Bukkit.getServer().getPluginManager().getPermission("minecraft.command").recalculatePermissibles();
+				
+				Bukkit.getServer().getPluginManager().getPermission("bukkit.command.help").setDefault(PermissionDefault.OP);
+				Bukkit.getServer().getPluginManager().getPermission("bukkit.command.plugins").setDefault(PermissionDefault.OP);
+				Bukkit.getServer().getPluginManager().getPermission("bukkit.command.version").setDefault(PermissionDefault.OP);
+				Bukkit.getServer().getPluginManager().getPermission("bukkit.command").recalculatePermissibles();
+			});
 			
 			ConfigurationSerialization.registerClass(WordlessLocation.class);
 			ConfigurationSerialization.registerClass(BorderVector.class);

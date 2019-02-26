@@ -13,10 +13,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.command.defaults.HelpCommand;
-import org.bukkit.command.defaults.PluginsCommand;
 import org.bukkit.command.defaults.ReloadCommand;
-import org.bukkit.command.defaults.VersionCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.help.HelpYamlReader;
@@ -130,10 +127,7 @@ public class NmsHandlerServer implements fi.joniaromaa.parinacorelibrary.bukkit.
 			knownCommandsField.setAccessible(true);
 			
 			Map<String, Command> knownCommands = (Map<String, Command>)knownCommandsField.get(((CraftServer)Bukkit.getServer()).getCommandMap());
-			this.removeCommand(knownCommands, VersionCommand.class);
 			this.removeCommand(knownCommands, ReloadCommand.class);
-			this.removeCommand(knownCommands, PluginsCommand.class);
-			this.removeCommand(knownCommands, HelpCommand.class);
 			
 			this.renameCommandMod(knownCommands, "bukkit", "parina");
 			this.renameCommandMod(knownCommands, "spigot", "parina");

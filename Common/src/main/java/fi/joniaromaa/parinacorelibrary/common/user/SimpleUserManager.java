@@ -1,6 +1,7 @@
 package fi.joniaromaa.parinacorelibrary.common.user;
 
 import java.time.Duration;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +20,7 @@ public class SimpleUserManager implements UserManager
 {
 	private ParinaCorePlugin plugin;
 	
-	private AsyncLoadingCache<UUID, User> cachedUsers;
+	private AsyncLoadingCache<UUID, Optional<User>> cachedUsers;
 	
 	public SimpleUserManager(ParinaCorePlugin plugin)
 	{
@@ -36,24 +37,28 @@ public class SimpleUserManager implements UserManager
 	}
 	
 	@Override
-	public CompletableFuture<User> loadUser(UUID uniqueId)
+	public CompletableFuture<Optional<User>> loadUser(UUID uniqueId)
 	{
 		return this.loadUser(uniqueId, (String)null);
 	}
 
 	@Override
-	public CompletableFuture<User> loadUser(UUID uniqueId, String username)
+	public CompletableFuture<Optional<User>> loadUser(UUID uniqueId, String username)
 	{
-		CompletableFuture<User> user = this.plugin.getApi().getStorageManager().getStorageModule(UserStorageModule.class).loadUser(uniqueId, username);
+		UserStorageModule userStorageModule = this.plugin.getApi().getStorageManager().getStorageModule(UserStorageModule.class).orElseThrow(() -> new RuntimeException("User storage moduel is missing"));
+		
+		CompletableFuture<Optional<User>> user = userStorageModule.loadUser(uniqueId, username);
 		
 		this.cachedUsers.put(uniqueId, user);
 		
 		return user;
 	}
 
-	private CompletableFuture<User> loadUser(UUID uniqueId, Executor executor)
+	private CompletableFuture<Optional<User>> loadUser(UUID uniqueId, Executor executor)
 	{
-		CompletableFuture<User> user = this.plugin.getApi().getStorageManager().getStorageModule(UserStorageModule.class).loadUser(uniqueId, executor);
+		UserStorageModule userStorageModule = this.plugin.getApi().getStorageManager().getStorageModule(UserStorageModule.class).orElseThrow(() -> new RuntimeException("User storage moduel is missing"));
+		
+		CompletableFuture<Optional<User>> user = userStorageModule.loadUser(uniqueId, executor);
 		
 		this.cachedUsers.put(uniqueId, user);
 		
@@ -61,20 +66,20 @@ public class SimpleUserManager implements UserManager
 	}
 	
 	@Override
-	public User getUser(UUID id)
+	public Optional<User> getUser(UUID id)
 	{
-		CompletableFuture<User> user = this.cachedUsers.getIfPresent(id);
+		CompletableFuture<Optional<User>> user = this.cachedUsers.getIfPresent(id);
 		if (user != null)
 		{
 			try
 			{
-				return user.getNow(null);
+				return user.getNow(Optional.empty());
 			}
-			catch(CompletionException | CancellationException  e)
+			catch(CompletionException | CancellationException e)
 			{
 			}
 		}
 		
-		return null;
+		return Optional.empty();
 	}
 }

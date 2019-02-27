@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -18,15 +19,17 @@ import fi.joniaromaa.parinacorelibrary.common.storage.modules.adapters.UserStora
 import fi.joniaromaa.parinacorelibrary.common.storage.types.PostgreSqlStorage;
 import fi.joniaromaa.parinacorelibrary.common.user.SimpleUser;
 
-public class UserStorageModulePostgresAdapter extends UserStorageModuleAdapter
+public class UserStorageModulePostgresAdapter extends UserStorageModuleAdapter<PostgreSqlStorage>
 {
 	public UserStorageModulePostgresAdapter(PostgreSqlStorage storage)
 	{
 		super(storage);
 	}
 	
+	//TODO: We need to implement effient caching for dynamic queries and take advantage of prepared statements
+	
 	@Override
-	protected User loadUser0(UUID uniqueId, String username)
+	protected Optional<User> loadUser0(UUID uniqueId, String username)
 	{
 		StringBuilder stringBuilder = new StringBuilder("SELECT * FROM (SELECT u.id, u.uuid, u.username");
 		for(StorageDataSetInfo dataSet : this.getUserDataStorageSetInfo())
@@ -136,7 +139,7 @@ public class UserStorageModulePostgresAdapter extends UserStorageModuleAdapter
 						}
 					}
 					
-					return user;
+					return Optional.of(user);
 				}
 			}
 		}
@@ -145,7 +148,7 @@ public class UserStorageModulePostgresAdapter extends UserStorageModuleAdapter
 			e.printStackTrace();
 		}
 		
-		return null; //Not found, failed to load, something
+		return Optional.empty(); //Not found, failed to load, something
 	}
 	
 	private String buildIncrementUpdaterQuery(UUID uniqueId, Object storageData)

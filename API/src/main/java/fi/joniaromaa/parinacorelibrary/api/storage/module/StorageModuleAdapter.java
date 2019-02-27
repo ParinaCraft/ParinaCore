@@ -1,17 +1,19 @@
 package fi.joniaromaa.parinacorelibrary.api.storage.module;
 
+import javax.annotation.Nonnull;
+
 import fi.joniaromaa.parinacorelibrary.api.storage.Storage;
 
-public abstract class StorageModuleAdapter<U extends StorageModule, T extends Storage>
+public abstract class StorageModuleAdapter<T extends StorageModule, U extends Storage>
 {
-	private T storage;
+	private U storage;
 	
-	public StorageModuleAdapter(T storage)
+	public StorageModuleAdapter(@Nonnull U storage)
 	{
 		this.storage = storage;
 	}
 	
-	protected T getStorage()
+	protected @Nonnull U getStorage()
 	{
 		return this.storage;
 	}

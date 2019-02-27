@@ -38,15 +38,16 @@ public class PostgreSqlStorage implements Storage
         poolProperties.setValidationInterval(30000);
         this.pool = new DataSource(poolProperties);
 	}
-	
-	public Connection getConnection() throws SQLException
-	{
-		return this.pool.getConnection();
-	}
 
 	@Override
 	public StorageType getType()
 	{
 		return StorageType.PostgreSql;
+	}
+
+	@Override
+	public Connection getConnection() throws SQLException
+	{
+		return this.pool.getConnection();
 	}
 }

@@ -1,11 +1,13 @@
 package fi.joniaromaa.parinacorelibrary.api.config;
 
+import javax.annotation.Nonnull;
+
 public interface DatabaseConfig
 {
-	public String getDatabaseHost();
+	public @Nonnull String getDatabaseHost();
 	public int getDatabasePort();
 	
-	public String getDatabaseUser();
-	public String getDatabasePass();
-	public String getDatabaseName();
+	public @Nonnull String getDatabaseUser();
+	public @Nonnull String getDatabasePass();
+	public @Nonnull String getDatabaseName();
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
+
 import fi.joniaromaa.parinacorelibrary.api.storage.dataset.StorageDataGetter;
 import fi.joniaromaa.parinacorelibrary.api.storage.dataset.StorageDataRank;
 import fi.joniaromaa.parinacorelibrary.api.storage.dataset.StorageDataSet;
@@ -64,14 +66,14 @@ public class UserMonumentWarsStatsDataStorage implements UserDataStorage
 		return (int)Math.max(1, Math.ceil(currentLevel / 5D)) * 500;
 	}
 	
-	public String getPrefix()
+	public @Nonnull String getPrefix()
 	{
-		Map<String, Integer> ranks = new HashMap<String, Integer>();
+		Map<String, Integer> ranks = new HashMap<String, Integer>(3);
 		ranks.put("Wins", this.getWinsRank());
 		ranks.put("Final Kills", this.getFinalKillsRank());
 		ranks.put("✮", this.getTotalExpRank());
 		
-		Entry<String, Integer> ranking = ranks.entrySet().stream().min((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue())).orElse(null);
+		Entry<String, Integer> ranking = ranks.entrySet().stream().min((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue())).get();
 		
 		StringBuilder stringBuilder = new StringBuilder();
 		if (ranking.getValue() <= 10)

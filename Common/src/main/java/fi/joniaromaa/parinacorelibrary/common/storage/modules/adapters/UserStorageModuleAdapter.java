@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -16,20 +17,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import fi.joniaromaa.parinacorelibrary.api.storage.Storage;
 import fi.joniaromaa.parinacorelibrary.api.storage.module.StorageModuleAdapter;
 import fi.joniaromaa.parinacorelibrary.api.user.User;
 import fi.joniaromaa.parinacorelibrary.api.user.dataset.UserDataStorage;
 import fi.joniaromaa.parinacorelibrary.common.storage.data.StorageDataSetInfo;
 import fi.joniaromaa.parinacorelibrary.common.storage.modules.UserStorageModule;
-import fi.joniaromaa.parinacorelibrary.common.storage.types.PostgreSqlStorage;
 
-public abstract class UserStorageModuleAdapter extends StorageModuleAdapter<UserStorageModule, PostgreSqlStorage> implements UserStorageModule
+public abstract class UserStorageModuleAdapter<T extends Storage> extends StorageModuleAdapter<UserStorageModule, T> implements UserStorageModule
 {
 	private static final JsonParser jsonParser = new JsonParser();
 	
 	private List<StorageDataSetInfo> userDataStorageSetInfo;
 	
-	public UserStorageModuleAdapter(PostgreSqlStorage storage)
+	public UserStorageModuleAdapter(T storage)
 	{
 		super(storage);
 		
@@ -37,7 +38,7 @@ public abstract class UserStorageModuleAdapter extends StorageModuleAdapter<User
 	}
 
 	@Override
-	public <T extends UserDataStorage> void addUserDataStorageSet(Class<T> storageDataSet)
+	public <U extends UserDataStorage> void addUserDataStorageSet(Class<U> storageDataSet)
 	{
 		StorageDataSetInfo info = new StorageDataSetInfo(storageDataSet);
 		if (info.isValid())
@@ -47,25 +48,25 @@ public abstract class UserStorageModuleAdapter extends StorageModuleAdapter<User
 	}
 
 	@Override
-	public CompletableFuture<User> loadUser(UUID uniqueId)
+	public CompletableFuture<Optional<User>> loadUser(UUID uniqueId)
 	{
 		return CompletableFuture.supplyAsync(() -> this.figureOutUsername(uniqueId)).thenApply((u) -> this.loadUser0(uniqueId, u));
 	}
 
 	@Override
-	public CompletableFuture<User> loadUser(UUID uniqueId, String username)
+	public CompletableFuture<Optional<User>> loadUser(UUID uniqueId, String username)
 	{
 		return CompletableFuture.supplyAsync(() -> this.loadUser0(uniqueId, username));
 	}
 
 	@Override
-	public CompletableFuture<User> loadUser(UUID uniqueId, Executor executor)
+	public CompletableFuture<Optional<User>> loadUser(UUID uniqueId, Executor executor)
 	{
 		return CompletableFuture.supplyAsync(() -> this.figureOutUsername(uniqueId), executor).thenApply((u) -> this.loadUser0(uniqueId, u));
 	}
 	
 	@Override
-	public CompletableFuture<User> loadUser(UUID uniqueId, String username, Executor executor)
+	public CompletableFuture<Optional<User>> loadUser(UUID uniqueId, String username, Executor executor)
 	{
 		return CompletableFuture.supplyAsync(() -> this.loadUser0(uniqueId, username), executor);
 	}
@@ -92,7 +93,7 @@ public abstract class UserStorageModuleAdapter extends StorageModuleAdapter<User
 		{
 		}
 	
-		return "Unknown";
+		return "Username Unknown";
 	}
 	
 	protected List<StorageDataSetInfo> getUserDataStorageSetInfo()
@@ -100,5 +101,5 @@ public abstract class UserStorageModuleAdapter extends StorageModuleAdapter<User
 		return Collections.unmodifiableList(this.userDataStorageSetInfo);
 	}
 	
-	protected abstract User loadUser0(UUID uniqueId, String username);
+	protected abstract Optional<User> loadUser0(UUID uniqueId, String username);
 }

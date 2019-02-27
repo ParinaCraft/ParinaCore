@@ -15,7 +15,7 @@ public interface User
 	
 	public void setDataStorage(UserDataStorage dataSet);
 	
-	public <T extends UserDataStorage> T removeDataStorage(Class<T> clazz);
+	public <T extends UserDataStorage> Optional<T> removeDataStorage(Class<T> clazz);
 	
 	public @Nonnull UUID getUniqueId();
 	public @Nonnull String getUsername();
@@ -31,5 +31,5 @@ public interface User
 	
 	public int getWeight();
 	
-	public <T extends UserDataStorage> T getDataStorage(Class<T> clazz);
+	public <T extends UserDataStorage> Optional<T> getDataStorage(Class<T> clazz);
 }

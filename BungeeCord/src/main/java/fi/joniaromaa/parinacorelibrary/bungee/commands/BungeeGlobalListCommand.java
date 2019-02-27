@@ -40,11 +40,7 @@ public class BungeeGlobalListCommand extends Command
 				{
 					if (!BungeeTabListPlus.isHidden(BungeeTabListPlus.getInstance().getConnectedPlayerManager().getPlayer(player)) || sender.hasPermission("bungeetablistplus.seevanished"))
 					{
-						User user = this.plugin.getApi().getUserManager().getUser(player.getUniqueId());
-						if (user != null)
-						{
-							players.add(user);
-						}
+						this.plugin.getApi().getUserManager().getUser(player.getUniqueId()).ifPresent((u) -> players.add(u));
 					}
 				}
 				

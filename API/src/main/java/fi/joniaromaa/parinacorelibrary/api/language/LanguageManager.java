@@ -2,11 +2,11 @@ package fi.joniaromaa.parinacorelibrary.api.language;
 
 import java.util.Locale;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 public interface LanguageManager
 {
-	public void addTranslation(Locale locale, String area, String key, String value);
+	public void addTranslation(@Nonnull Locale locale, @Nonnull String area, @Nonnull String key, @Nonnull String value);
 	
-	public String getTranslation(@Nullable Locale locale, String area, String key, Object ...params);
+	public @Nonnull String getTranslation(@Nonnull Locale locale, @Nonnull String area, @Nonnull String key, Object ...params);
 }

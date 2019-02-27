@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import fi.joniaromaa.parinacorelibrary.api.storage.Storage;
 import fi.joniaromaa.parinacorelibrary.api.storage.StorageManager;
@@ -25,8 +26,9 @@ public class SimpleStorageManager implements StorageManager
 		this.modules = new HashMap<>();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends StorageModule> void addStorageModule(Class<T> module, @SuppressWarnings("unchecked") Class<? extends StorageModuleAdapter<T, ?>> ...adapters)
+	public <T extends StorageModule> Optional<T> addStorageModule(Class<T> module, Class<? extends StorageModuleAdapter<T, ?>> ...adapters)
 	{
 		for(Class<? extends StorageModuleAdapter<T, ?>> adapter : adapters)
 		{
@@ -37,7 +39,11 @@ public class SimpleStorageManager implements StorageManager
 				{
 					try
 					{
-						this.modules.put(module, adapter.getConstructor((Class<?>)storageType).newInstance(this.storage));
+						StorageModuleAdapter<T, ?> adapterInstance = adapter.getConstructor((Class<?>)storageType).newInstance(this.storage);
+						
+						this.modules.put(module, adapterInstance);
+						
+						return Optional.of((T)adapterInstance);
 					}
 					catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e)
 					{
@@ -46,19 +52,15 @@ public class SimpleStorageManager implements StorageManager
 				}
 			}
 		}
+		
+		return Optional.empty();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends StorageModule> T getStorageModule(Class<T> baseClass)
+	public <T extends StorageModule> Optional<T> getStorageModule(Class<T> baseClass)
 	{
-		StorageModuleAdapter<?, ?> storageModule = this.modules.get(baseClass);
-		if (storageModule != null)
-		{
-			return (T)storageModule;
-		}
-		
-		return null;
+		return Optional.ofNullable((T)this.modules.get(baseClass));
 	}
 
 	@Override

@@ -59,9 +59,9 @@ public class SimpleUser implements User
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends UserDataStorage> T removeDataStorage(Class<T> clazz)
+	public <T extends UserDataStorage> Optional<T> removeDataStorage(Class<T> clazz)
 	{
-		return (T)this.storageSets.remove(clazz);
+		return Optional.ofNullable((T)this.storageSets.remove(clazz));
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class SimpleUser implements User
 		Optional<String> prefix = this.getPrefix();
 		if (prefix.isPresent())
 		{
-			int colorPrefixIndex = prefix.get().lastIndexOf('§');
+			int colorPrefixIndex = prefix.get().lastIndexOf('ï¿½');
 			if (colorPrefixIndex != -1)
 			{
 				String color = prefix.get().substring(colorPrefixIndex, colorPrefixIndex + 2);
@@ -164,8 +164,8 @@ public class SimpleUser implements User
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends UserDataStorage> T getDataStorage(Class<T> clazz)
+	public <T extends UserDataStorage> Optional<T> getDataStorage(Class<T> clazz)
 	{
-		return (T)this.storageSets.get(clazz);
+		return Optional.ofNullable((T)this.storageSets.get(clazz));
 	}
 }

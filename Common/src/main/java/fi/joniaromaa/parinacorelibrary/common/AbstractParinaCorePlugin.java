@@ -46,11 +46,10 @@ public abstract class AbstractParinaCorePlugin implements ParinaCorePlugin, Pari
 	@SuppressWarnings("unchecked")
 	private void addDefaultStorageModules()
 	{
-		//Add modules
-		this.storageManager.addStorageModule(UserStorageModule.class, UserStorageModulePostgresAdapter.class);
+		//Try to create user storage module with pre build adapters
+		UserStorageModule userStorageModule = this.storageManager.addStorageModule(UserStorageModule.class, UserStorageModulePostgresAdapter.class).orElseThrow(() -> new RuntimeException("Unsupported storage adapter"));
 		
-		//Add stuff to the modules
-		UserStorageModule userStorageModule = this.storageManager.getStorageModule(UserStorageModule.class);
+		//After we have successfully created the correct adapter we can apply storage sets to it
 		userStorageModule.addUserDataStorageSet(UserMonumentWarsStatsDataStorage.class);
 	}
 	

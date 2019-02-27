@@ -30,7 +30,7 @@ public class PlayerListener implements Listener
 		{
 			try
 			{
-				User user = this.plugin.getUserManager().loadUser(event.getUniqueId(), event.getName()).get(10, TimeUnit.SECONDS);
+				User user = this.plugin.getUserManager().loadUser(event.getUniqueId(), event.getName()).get(10, TimeUnit.SECONDS).orElse(null);
 				if (user == null)
 				{
 					event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Failed to load user data");

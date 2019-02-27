@@ -99,13 +99,13 @@ public class LeaderboardHologram implements DynamicHologram
             int thisI = ++j;
             ParinaCore.getApi().getUserManager().loadUser((UUID)entry.getKey()).thenAccept(u ->
             {
-                if (u == null)
+                if (!u.isPresent())
                 {
                     this.leaderboardHolograms.get(thisI - 1).setText(ChatColor.YELLOW + "#" + thisI + " - " + ChatColor.YELLOW + "Loading");
                 }
                 else
                 {
-                    this.leaderboardHolograms.get(thisI - 1).setText(ChatColor.YELLOW + "#" + thisI + " - " + u.getFormattedDisplayName() + ChatColor.YELLOW + " - " + this.formatScore(entry.getValue()));
+                    this.leaderboardHolograms.get(thisI - 1).setText(ChatColor.YELLOW + "#" + thisI + " - " + u.get().getFormattedDisplayName() + ChatColor.YELLOW + " - " + this.formatScore(entry.getValue()));
                 }
             });
             
@@ -157,7 +157,7 @@ public class LeaderboardHologram implements DynamicHologram
 				}
 			}
 			
-			User user = ParinaCore.getApi().getUserManager().getUser(player.getUniqueId());
+			User user = ParinaCore.getApi().getUserManager().getUser(player.getUniqueId()).orElse(null);
 			if (user != null)
 			{
 				if (value != null)

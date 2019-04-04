@@ -1,8 +1,7 @@
 package fi.joniaromaa.parinacorelibrary.common.storage;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -32,24 +31,28 @@ public class SimpleStorageManager implements StorageManager
 	{
 		for(Class<? extends StorageModuleAdapter<T, ?>> adapter : adapters)
 		{
-			Type storageType = ((ParameterizedType)adapter.getSuperclass().getGenericSuperclass()).getActualTypeArguments()[1];
-			if (storageType instanceof Class<?>)
+			Constructor<StorageModuleAdapter<T, ?>> constructor;
+			
+			try
 			{
-				if (this.storage.getClass().isAssignableFrom((Class<?>)storageType))
-				{
-					try
-					{
-						StorageModuleAdapter<T, ?> adapterInstance = adapter.getConstructor((Class<?>)storageType).newInstance(this.storage);
-						
-						this.modules.put(module, adapterInstance);
-						
-						return Optional.of((T)adapterInstance);
-					}
-					catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e)
-					{
-						throw new IllegalArgumentException(e);
-					}
-				}
+				constructor = (Constructor<StorageModuleAdapter<T, ?>>)adapter.getConstructor(this.storage.getClass());
+			}
+			catch (NoSuchMethodException | SecurityException ignore)
+			{
+				continue;
+			}
+			
+			try
+			{
+				StorageModuleAdapter<T, ?> adapterInstance = constructor.newInstance(this.storage);
+				
+				this.modules.put(module, adapterInstance);
+
+				return Optional.of((T)adapterInstance);
+			}
+			catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e)
+			{
+				throw new IllegalArgumentException(e);
 			}
 		}
 		

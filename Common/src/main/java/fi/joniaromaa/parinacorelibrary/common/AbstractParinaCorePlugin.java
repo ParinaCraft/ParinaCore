@@ -39,7 +39,7 @@ public abstract class AbstractParinaCorePlugin implements ParinaCorePlugin, Pari
 		this.addDefaultStorageModules();
 		
 		this.setupPlatform();
-		
+
 		ParinaCore.setApi(this);
 	}
 	

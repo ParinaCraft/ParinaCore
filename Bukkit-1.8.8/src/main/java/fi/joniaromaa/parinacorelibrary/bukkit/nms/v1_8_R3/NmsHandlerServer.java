@@ -111,7 +111,7 @@ public class NmsHandlerServer implements fi.joniaromaa.parinacorelibrary.bukkit.
 		SpigotConfig.tabComplete = 0;
 		SpigotConfig.silentCommandBlocks = false;
 		SpigotConfig.logCommands = true;
-		SpigotConfig.spamExclusions.clear();
+		SpigotConfig.spamExclusions = new ArrayList<>();
 
 		SpigotConfig.saveUserCacheOnStopOnly = true;
 		SpigotConfig.forcedStats.put("achievement.openInventory", 1);

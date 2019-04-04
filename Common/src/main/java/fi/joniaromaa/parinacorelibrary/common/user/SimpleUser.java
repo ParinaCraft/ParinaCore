@@ -81,7 +81,7 @@ public class SimpleUser implements User
 		Optional<String> prefix = this.getPrefix();
 		if (prefix.isPresent())
 		{
-			int colorPrefixIndex = prefix.get().lastIndexOf('�');
+			int colorPrefixIndex = prefix.get().lastIndexOf('');
 			if (colorPrefixIndex != -1)
 			{
 				String color = prefix.get().substring(colorPrefixIndex, colorPrefixIndex + 2);

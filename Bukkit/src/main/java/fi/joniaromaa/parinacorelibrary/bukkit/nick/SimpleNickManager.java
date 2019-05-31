@@ -18,7 +18,7 @@ public class SimpleNickManager implements NickManager
 		this.plugin = plugin;
 		
 		this.deadmau5Ears = new HashMap<>();
-		this.deadmau5Ears.put(UUID.fromString("8c0d9cc3-c4fc-4b2b-b945-3726f6a6b3fb"), true);
+		//this.deadmau5Ears.put(UUID.fromString("8c0d9cc3-c4fc-4b2b-b945-3726f6a6b3fb"), true);
 	}
 	
 	@Override

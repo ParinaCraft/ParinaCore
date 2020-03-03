@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import codecrafter47.bungeetablistplus.BungeeTabListPlus;
+import codecrafter47.bungeetablistplus.data.BTLPBungeeDataKeys;
 import fi.joniaromaa.parinacorelibrary.api.user.User;
 import fi.joniaromaa.parinacorelibrary.bungee.ParinaCoreBungeePlugin;
 import net.md_5.bungee.api.ChatColor;
@@ -38,7 +39,7 @@ public class BungeeGlobalListCommand extends Command
 				List<User> players = new ArrayList<>();
 				for(ProxiedPlayer player : serverInfo.getPlayers())
 				{
-					if (!BungeeTabListPlus.isHidden(BungeeTabListPlus.getInstance().getConnectedPlayerManager().getPlayer(player)) || sender.hasPermission("bungeetablistplus.seevanished"))
+					if (!Boolean.TRUE.equals(BungeeTabListPlus.getInstance().getBungeePlayerProvider().getPlayer(player).getLocalDataCache().get(BTLPBungeeDataKeys.DATA_KEY_IS_HIDDEN)) || sender.hasPermission("bungeetablistplus.seevanished"))
 					{
 						this.plugin.getApi().getUserManager().getUser(player.getUniqueId()).ifPresent((u) -> players.add(u));
 					}

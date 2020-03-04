@@ -86,9 +86,9 @@
 	    <version>2.6.2</version>
 	</dependency>
     <dependency>
-        <groupId>me.lucko.luckperms</groupId>
-        <artifactId>luckperms-api</artifactId>
-        <version>4.1</version>
+        <groupId>net.luckperms</groupId>
+        <artifactId>api</artifactId>
+        <version>5.0</version>
         <scope>provided</scope>
     </dependency>
 	<dependency>

@@ -12,8 +12,8 @@ import com.google.common.base.Preconditions;
 import fi.joniaromaa.parinacorelibrary.api.user.User;
 import fi.joniaromaa.parinacorelibrary.api.user.dataset.UserDataStorage;
 import lombok.Getter;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Contexts;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.ChatColor;
 
 public class SimpleUser implements User
@@ -100,14 +100,14 @@ public class SimpleUser implements User
 		
 		this.getPrefix().ifPresent((p) ->
 		{
-			stringBuilder.append(p).append(' '); //Add space to keep prefix and display name seprate
+			stringBuilder.append(p);
 		});
 		
 		stringBuilder.append(this.getDisplayName());
 		
 		this.getSuffix().ifPresent((s) ->
 		{
-			stringBuilder.append(' ').append(s); //Add space to keep prefix and display name seprate
+			stringBuilder.append(s);
 		});
 		
 		return stringBuilder.toString();
@@ -115,10 +115,10 @@ public class SimpleUser implements User
 	
 	public Optional<String> getPrefix()
 	{
-		me.lucko.luckperms.api.User lpUser = LuckPerms.getApi().getUser(this.uniqueId);
+		net.luckperms.api.model.user.User lpUser = LuckPermsProvider.get().getUserManager().getUser(this.uniqueId);
 		if (lpUser != null)
 		{
-			String prefix = lpUser.getCachedData().getMetaData(Contexts.global()).getPrefix();
+			String prefix = lpUser.getCachedData().getMetaData(QueryOptions.defaultContextualOptions()).getPrefix();
 			if (prefix != null)
 			{
 				return Optional.of(ChatColor.translateAlternateColorCodes('&', prefix));
@@ -130,10 +130,10 @@ public class SimpleUser implements User
 	
 	public Optional<String> getSuffix()
 	{
-		me.lucko.luckperms.api.User lpUser = LuckPerms.getApi().getUser(this.uniqueId);
+		net.luckperms.api.model.user.User lpUser = LuckPermsProvider.get().getUserManager().getUser(this.uniqueId);
 		if (lpUser != null)
 		{
-			String prefix = lpUser.getCachedData().getMetaData(Contexts.global()).getSuffix();
+			String prefix = lpUser.getCachedData().getMetaData(QueryOptions.defaultContextualOptions()).getSuffix();
 			if (prefix != null)
 			{
 				return Optional.of(ChatColor.translateAlternateColorCodes('&', prefix));
@@ -145,10 +145,10 @@ public class SimpleUser implements User
 	
 	public int getWeight()
 	{
-		me.lucko.luckperms.api.User lpUser = LuckPerms.getApi().getUser(this.uniqueId);
+		net.luckperms.api.model.user.User lpUser = LuckPermsProvider.get().getUserManager().getUser(this.uniqueId);
 		if (lpUser != null)
 		{
-			me.lucko.luckperms.api.Group group = LuckPerms.getApi().getGroup(lpUser.getPrimaryGroup());
+			net.luckperms.api.model.group.Group group = LuckPermsProvider.get().getGroupManager().getGroup(lpUser.getPrimaryGroup());
 			if (group != null)
 			{
 				OptionalInt weight = group.getWeight();
